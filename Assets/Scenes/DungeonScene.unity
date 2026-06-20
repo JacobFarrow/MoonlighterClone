@@ -747,6 +747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
   itemNames: []
   itemValues: 
+  itemRarities: 
   gold: 0
 --- !u!1 &452914757
 GameObject:
@@ -1867,7 +1868,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   maxHealth: 3
   currentHealth: 0
-  lootPrefab: {fileID: 6465508690927516121, guid: 5b0904a2983d1c54db3f3c66c2c6d359, type: 3}
+  enemyLevel: 1
+  lootTable:
+  - prefab: {fileID: 5330951673189772946, guid: 1b382c09051f54e418e85e7c0df2bb3e, type: 3}
+    rarity: 0
+    weight: 100
+  - prefab: {fileID: 6465508690927516121, guid: 5b0904a2983d1c54db3f3c66c2c6d359, type: 3}
+    rarity: 1
+    weight: 50
+  - prefab: {fileID: 6166302321689855067, guid: 562461673ab071b4392cffe482546c9b, type: 3}
+    rarity: 2
+    weight: 20
 --- !u!1 &1474509007
 GameObject:
   m_ObjectHideFlags: 0
