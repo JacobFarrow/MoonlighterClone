@@ -26,6 +26,8 @@ public class UpgradeManager : MonoBehaviour
         }
         else
         {
+            // Before destroying, make sure the existing instance has latest data
+            instance.Load();
             Destroy(gameObject);
         }
     }
@@ -39,7 +41,6 @@ public class UpgradeManager : MonoBehaviour
             attackUpgradeCost = Mathf.RoundToInt(attackUpgradeCost * 1.5f);
             ApplyUpgrades();
             Save();
-            Debug.Log("Attack upgraded to level " + attackLevel);
             return true;
         }
         Debug.Log("Not enough gold!");
@@ -55,7 +56,6 @@ public class UpgradeManager : MonoBehaviour
             speedUpgradeCost = Mathf.RoundToInt(speedUpgradeCost * 1.5f);
             ApplyUpgrades();
             Save();
-            Debug.Log("Speed upgraded to level " + speedLevel);
             return true;
         }
         Debug.Log("Not enough gold!");
@@ -71,7 +71,6 @@ public class UpgradeManager : MonoBehaviour
             healthUpgradeCost = Mathf.RoundToInt(healthUpgradeCost * 1.5f);
             ApplyUpgrades();
             Save();
-            Debug.Log("Health upgraded to level " + healthLevel);
             return true;
         }
         Debug.Log("Not enough gold!");
@@ -94,10 +93,12 @@ public class UpgradeManager : MonoBehaviour
             ph.maxHealth = 5 + (healthLevel - 1) * 2;
             if (ph.currentHealth > ph.maxHealth)
                 ph.currentHealth = ph.maxHealth;
+            PlayerPrefs.SetInt("CurrentHealth", ph.currentHealth);
+            PlayerPrefs.Save();
         }
     }
 
-    void Save()
+    public void Save()
     {
         PlayerPrefs.SetInt("AttackLevel", attackLevel);
         PlayerPrefs.SetInt("AttackCost", attackUpgradeCost);
@@ -108,7 +109,7 @@ public class UpgradeManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    void Load()
+    public void Load()
     {
         attackLevel = PlayerPrefs.GetInt("AttackLevel", 1);
         attackUpgradeCost = PlayerPrefs.GetInt("AttackCost", 50);

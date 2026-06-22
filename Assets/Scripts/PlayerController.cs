@@ -18,6 +18,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // Apply saved upgrades
+        if (UpgradeManager.instance != null)
+        {
+            moveSpeed = 5f + (UpgradeManager.instance.speedLevel - 1) * 1.5f;
+            attackDamage = UpgradeManager.instance.attackLevel;
+        }
     }
 
     void Update()

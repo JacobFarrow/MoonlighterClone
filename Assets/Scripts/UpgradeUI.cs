@@ -91,6 +91,8 @@ public class UpgradeUI : MonoBehaviour
         isOpen = true;
         upgradePanel.SetActive(true);
         Time.timeScale = 0f;
+        if (promptText != null)
+            promptText.gameObject.SetActive(false);
         RefreshUI();
     }
 
@@ -99,6 +101,8 @@ public class UpgradeUI : MonoBehaviour
         isOpen = false;
         upgradePanel.SetActive(false);
         Time.timeScale = 1f;
+        if (promptText != null && playerAtDesk)
+            promptText.gameObject.SetActive(true);
     }
 
     void RefreshUI()

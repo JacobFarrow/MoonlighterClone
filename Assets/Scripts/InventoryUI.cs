@@ -7,10 +7,9 @@ public class InventoryUI : MonoBehaviour
     public static InventoryUI instance;
 
     public GameObject inventoryPanel;
-    public Transform itemListParent;
-    public GameObject itemRowPrefab;
     public TextMeshProUGUI goldText;
     public TextMeshProUGUI totalItemsText;
+    public Transform itemListParent;
 
     private bool isOpen = false;
 
@@ -52,53 +51,64 @@ public class InventoryUI : MonoBehaviour
 
         if (Inventory.instance == null) return;
 
-        // Update gold and item count
         goldText.text = "Gold: " + Inventory.instance.gold + "g";
         totalItemsText.text = "Items: " + Inventory.instance.itemNames.Count;
 
-        // Create a row for each item
         for (int i = 0; i < Inventory.instance.itemNames.Count; i++)
         {
-            GameObject row = Instantiate(itemRowPrefab, itemListParent);
-            
-            // Find the children explicitly by name with safety checks
-            Transform nameTrans = row.transform.Find("NameText");
-            Transform rarityTrans = row.transform.Find("RarityText");
-            Transform valueTrans = row.transform.Find("ValueText");
+            // Create row
+            GameObject row = new GameObject("Row_" + i, typeof(RectTransform));
+            row.transform.SetParent(itemListParent, false);
 
-            if (nameTrans != null && rarityTrans != null && valueTrans != null)
-            {
-                TextMeshProUGUI nameText = nameTrans.GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI rarityText = rarityTrans.GetComponent<TextMeshProUGUI>();
-                TextMeshProUGUI valueText = valueTrans.GetComponent<TextMeshProUGUI>();
+            RectTransform rowRect = row.GetComponent<RectTransform>();
+            rowRect.sizeDelta = new Vector2(520, 50);
 
-                string rarityColor = GetRarityColor(Inventory.instance.itemRarities[i]);
-                
-                nameText.text = "<color=" + rarityColor + ">" + Inventory.instance.itemNames[i] + "</color>";
-                rarityText.text = Inventory.instance.itemRarities[i].ToString();
-                rarityText.color = GetRarityUnityColor(Inventory.instance.itemRarities[i]);
-                valueText.text = Inventory.instance.itemValues[i].ToString() + "g";
-            }
-            else
-            {
-                Debug.LogError("InventoryUI: Could not find child text objects in ItemRow prefab! Ensure they are named correctly.");
-            }
+            // Add horizontal layout
+            HorizontalLayoutGroup hlg = row.AddComponent<HorizontalLayoutGroup>();
+            hlg.spacing = 10;
+            hlg.childForceExpandWidth = false;
+            hlg.childForceExpandHeight = true;
+            hlg.padding = new RectOffset(10, 10, 5, 5);
+
+            // Add background
+            Image bg = row.AddComponent<Image>();
+            bg.color = new Color(0, 0, 0, 0.3f);
+
+            Rarity rarity = Inventory.instance.itemRarities[i];
+            Color rarityColor = GetRarityColor(rarity);
+
+            // Name
+            CreateText(row.transform, Inventory.instance.itemNames[i], rarityColor, 200, TextAlignmentOptions.Left);
+            // Rarity
+            CreateText(row.transform, rarity.ToString(), rarityColor, 150, TextAlignmentOptions.Center);
+            // Value
+            CreateText(row.transform, Inventory.instance.itemValues[i] + "g", Color.white, 100, TextAlignmentOptions.Right);
         }
     }
 
-    string GetRarityColor(Rarity rarity)
+    void CreateText(Transform parent, string text, Color color, float width, TextAlignmentOptions alignment)
     {
-        switch (rarity)
-        {
-            case Rarity.Common:   return "white";
-            case Rarity.Uncommon: return "green";
-            case Rarity.Rare:     return "cyan";
-            case Rarity.Epic:     return "purple";
-            default: return "white";
-        }
+        GameObject obj = new GameObject("Text", typeof(RectTransform));
+        obj.transform.SetParent(parent, false);
+
+        RectTransform rect = obj.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(width, 40);
+
+        // Add layout element
+        LayoutElement le = obj.AddComponent<LayoutElement>();
+        le.preferredWidth = width;
+        le.preferredHeight = 40;
+
+        TextMeshProUGUI tmp = obj.AddComponent<TextMeshProUGUI>();
+        tmp.text = text;
+        tmp.color = color;
+        tmp.fontSize = 16;
+        tmp.alignment = alignment;
+        tmp.textWrappingMode = TextWrappingModes.NoWrap;
+        tmp.overflowMode = TextOverflowModes.Overflow;
     }
 
-    Color GetRarityUnityColor(Rarity rarity)
+    Color GetRarityColor(Rarity rarity)
     {
         switch (rarity)
         {
