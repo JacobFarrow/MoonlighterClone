@@ -13,8 +13,10 @@ public class LootItem : MonoBehaviour
             Inventory inventory = other.GetComponent<Inventory>();
             if (inventory != null)
             {
+                if (AudioManager.instance != null)
+                    AudioManager.instance.PlayPickup();
+
                 inventory.AddItem(itemName, value, rarity);
-                Debug.Log("Picked up: " + rarity + " " + itemName + " worth " + value + " gold");
                 Destroy(gameObject);
             }
         }

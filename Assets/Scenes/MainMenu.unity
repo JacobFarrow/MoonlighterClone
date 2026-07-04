@@ -957,6 +957,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1445742575}
   m_CullTransparentMesh: 1
+--- !u!1 &1551154617
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1551154619}
+  - component: {fileID: 1551154618}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1551154618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551154617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36a2505d78671694ea70f64c6dbaabc2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  attackSound: {fileID: 8300000, guid: 311a495e90afc6e428e1154cbc894191, type: 3}
+  hitSound: {fileID: 8300000, guid: b6f1278ef4bf6b642acfc9cd8743982e, type: 3}
+  pickupSound: {fileID: 8300000, guid: db9df95212b3215448b2902773f08835, type: 3}
+  bellSound: {fileID: 8300000, guid: 8091714b44035b94baf0e24e57b0a779, type: 3}
+  dungeonMusic: {fileID: 0}
+  shopMusic: {fileID: 0}
+  musicVolume: 0.4
+  sfxVolume: 1
+--- !u!4 &1551154619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551154617}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 358.69064, y: 186.0006, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1957675099
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,3 +1427,4 @@ SceneRoots:
   - {fileID: 2040575631}
   - {fileID: 2043861039}
   - {fileID: 910683200}
+  - {fileID: 1551154619}

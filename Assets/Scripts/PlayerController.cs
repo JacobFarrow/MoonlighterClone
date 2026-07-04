@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,7 +18,6 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
 
-        // Apply saved upgrades
         if (UpgradeManager.instance != null)
         {
             moveSpeed = 5f + (UpgradeManager.instance.speedLevel - 1) * 1.5f;
@@ -50,6 +48,9 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
+        if (AudioManager.instance != null)
+            AudioManager.instance.PlayAttack();
+
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, attackRange);
         foreach (Collider2D hit in hitEnemies)
         {

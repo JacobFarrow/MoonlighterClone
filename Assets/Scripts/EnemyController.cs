@@ -12,11 +12,10 @@ public class EnemyController : MonoBehaviour
     private float attackTimer = 0f;
 
     void Start()
-{
-    rb = GetComponent<Rigidbody2D>();
-    // Find the player automatically instead of relying on the reference
-    player = GameObject.FindWithTag("Player").transform;
-}
+    {
+        rb = GetComponent<Rigidbody2D>();
+        player = GameObject.FindWithTag("Player").transform;
+    }
 
     void Update()
     {
@@ -27,9 +26,7 @@ public class EnemyController : MonoBehaviour
     void FixedUpdate()
     {
         if (player == null) return;
-
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
         if (distanceToPlayer < detectionRange)
         {
             Vector2 direction = (player.position - transform.position).normalized;
@@ -38,6 +35,16 @@ public class EnemyController : MonoBehaviour
     }
 
     void OnCollisionEnter2D(Collision2D collision)
+    {
+        TryDamagePlayer(collision);
+    }
+
+    void OnCollisionStay2D(Collision2D collision)
+    {
+        TryDamagePlayer(collision);
+    }
+
+    void TryDamagePlayer(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {

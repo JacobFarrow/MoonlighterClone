@@ -11,8 +11,10 @@ public class HealingItem : MonoBehaviour
             PlayerHealth health = other.GetComponent<PlayerHealth>();
             if (health != null)
             {
+                if (AudioManager.instance != null)
+                    AudioManager.instance.PlayPickup();
+
                 health.Heal(healAmount);
-                Debug.Log("Healed for " + healAmount);
                 Destroy(gameObject);
             }
         }
